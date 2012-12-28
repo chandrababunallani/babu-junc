@@ -1,0 +1,72 @@
+
+__version__ = '1.0dev12'
+
+import os
+
+from setuptools import setup, find_packages
+
+here = os.path.abspath(os.path.dirname(__file__))
+try:
+    README = open(os.path.join(here, 'README.txt')).read()
+    CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
+except IOError:
+    README = ''
+    CHANGES = ''
+
+requires = [
+    'karl',
+    'argparse',
+    'repoze.depinj',
+    'repoze.retry',
+    'repoze.urchin',
+    'WebTest',
+]
+
+setup(name='karlserve',
+      version=__version__,
+      description='Easily serve multiple instances of Karl.',
+      long_description=README + '\n\n' +  CHANGES,
+      classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+        "Topic :: Internet :: WWW/HTTP :: WSGI",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+        ],
+      author='',
+      author_email='',
+      url='',
+      keywords='web wsgi bfg zope',
+      packages=find_packages(),
+      include_package_data=True,
+      zip_safe=False,
+      install_requires = requires,
+      tests_require = requires,
+      test_suite="karlserve",
+      entry_points = """\
+      [paste.app_factory]
+      application = karlserve.application:make_app
+
+      [paste.filter_app_factory]
+
+      [console_scripts]
+      karlserve = karlserve.scripts.main:main
+
+      [karlserve.scripts]
+      debug = karlserve.scripts.debug:config_parser
+      digest = karlserve.scripts.digest:config_parser
+      evolve = karlserve.scripts.evolve:config_parser
+      feeds = karlserve.scripts.feeds:config_parser
+      mailin = karlserve.scripts.mailin:config_parser
+      mailout = karlserve.scripts.mailout:config_parser
+      migrate = karlserve.scripts.migrate:config_parser
+      mode = karlserve.scripts.mode:config_parser
+      peopleconf = karlserve.scripts.peopleconf:config_parser
+      samplegen = karlserve.scripts.samplegen:config_parser
+      serve = karlserve.scripts.serve:config_parser
+      settings = karlserve.scripts.settings:config_parser
+      sync = karlserve.scripts.sync:config_parser
+      """
+      )
